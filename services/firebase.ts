@@ -14,8 +14,24 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }else {
-  firebase.app(); // if already initialized, use that one
+  firebase.app();
 }
 
 
-export { firebase }
+async function loginWithEmailAndPassword(email: string, password: string) {
+  try {
+    const result = await firebase.auth().signInWithEmailAndPassword(email, password)
+    if (result.user) {
+      const { uid } = result.user
+      if (!uid) {
+        throw new Error('Missing information from Account.');
+      }
+      localStorage.setItem('user_id', uid)
+      return true
+    }
+  } catch (error) {
+    return false;
+  }
+}
+
+export { firebase, loginWithEmailAndPassword }
