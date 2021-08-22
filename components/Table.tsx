@@ -17,7 +17,7 @@ export default function Table(props: TableProps) {
     </tr>
   )
 
-  const headers = props?.headers?.map(item => <th className="py-3 px-6 text-left">{item}</th>)
+  const headers = props?.headers?.map((item, index) => <th key={index} className="py-3 px-6 text-left">{item}</th>)
 
 
   return (
